@@ -1,51 +1,48 @@
 # Spotify
 
-# TODO
+TODO
 
 ## Dataset Content
 
-# TODO
+TODO
 
 ## Business Requirements
 
-# TODO
+TODO
 
 ## Hypothesis and how to validate?
 
-# TODO
+TODO
 
 ## Project Plan
 
-# TODO
+TODO
 
 ## The rationale to map the business requirements to the Data Visualisations
 
-# TODO
+TODO
 
 ## Analysis techniques used
 
-# TODO
-
+TODO
 
 ## Ethical considerations
 
-# TODO
-
+TODO
 
 ## Dashboard Design
 
-# TODO
+TODO
 
 
 ## Unfixed Bugs
 
-# TODO
+TODO
 
 
 ## Development Roadmap
 
-# TODO
-
+TODO
 
 ## Deployment
 
@@ -60,18 +57,18 @@ streamlit run dashboard_app/main.py
 
 ## Main Data Analysis Libraries
 
-# TODO
+TODO
 
 ## Credits 
 
 ### Content 
 
-# TODO
+TODO
 
 ### Media
 
-# TODO
+TODO
 
 ## Acknowledgements (optional)
 
-# TODO
+TODO
