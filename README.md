@@ -21,11 +21,11 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/users/petedanielsmith/projects/4">Project Board</a>
+    <a href="https://github.com/users/petedanielsmith/projects/5">Project Board</a>
     &nbsp;&nbsp;-&nbsp;&nbsp;
-    <a href="./jupyter_notebooks/01_dataload_clean_and_look_at_distributions.ipynb">Jupyter Notebooks</a>
+    <a href="./jupyter_notebooks/01_data_clean_and_eda.ipynb">Jupyter Notebooks</a>
     &nbsp;&nbsp;-&nbsp;&nbsp;
-    <a href="https://social-media-effect-on-mental-health.streamlit.app/">Streamlit Dashboard</a>
+    <a href="https://spotify-recommendation-system-code-institute.streamlit.app/">Streamlit Dashboard</a>
     &nbsp;&nbsp;-&nbsp;&nbsp;
     <a href="#conclusions">Conclusions</a>
     <br/><br/><br/>
