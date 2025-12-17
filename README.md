@@ -198,7 +198,11 @@ TODO
 
 ## Ethical considerations
 
-TODO
+This project uses a publicly available Spotify dataset containing track-level metadata and audio features such as popularity, genre, tempo, energy, and danceability. The dataset does not include any personally identifiable information (PII) or individual user listening histories. As a result, the project does not present risks related to user privacy, data protection, or GDPR compliance.
+
+Despite the absence of personal data, ethical considerations remain relevant. The dataset reflects platform-driven popularity and listening trends, which may introduce bias into the recommendation system. Popular artists and genres may be over-represented, while niche or emerging artists may be under-recommended. Recommendations based solely on audio features may also fail to capture cultural, contextual, or subjective aspects of musical preference.
+
+This system is developed for educational and coursework purposes only, with the goal of exploring recommendation techniques rather than influencing user behaviour or commercial outcomes. The limitations of the dataset and model are acknowledged, and the recommendations should be interpreted as illustrative rather than authoritative. Future extensions of the project could include bias evaluation, diversity-aware recommendation strategies, and improved transparency in recommendation logic.
 
 ## Dashboard Design
 
