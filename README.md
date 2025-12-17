@@ -206,7 +206,13 @@ The objective of this project is to design and evaluate a data-driven music reco
 
 ## Hypothesis and how to validate?
 
-TODO
+* **Hypothesis 1:** All genres have the same average popularity; music preference is evenly distributed.
+  * **Selected Test:** **Mann-Whitney U Test**
+  * **Visual:** Box Plot comparison.
+
+* **Hypothesis 2:** Duration *does not* impact popularity.
+  * **Selected Test:** **Kruskal-Wallis H Test** 
+  * **Visual:** Hexbin Density Plot and Binned Bar Chart.
 
 ## Project Plan
 
@@ -224,11 +230,21 @@ The prjoject follows the following steps:
 
 ## The rationale to map the business requirements to the Data Visualisations
 
-TODO
+| Business Requirement | Data Visualisation(s) | Rationale & Hypothesis Outcome |
+| :--- | :--- | :--- |
+| **1. Identify trends in music preferences**<br>*(Genre Popularity)* | **Box Plot**<br>*(X=Genre, Y=Popularity)* | **Rationale:** Box plots show not just the *average* popularity, but the *variance* within a genre. This reveals if a genre is consistently popular (tight box, high median) or hit-or-miss (large spread).<br><br>**Hypothesis Outcome:** We expect to see "Pop-Film" and "K-Pop" with high medians, confirming global preference for these styles. |
+| **2. Visualise popular songs by time**<br>*(Duration vs. Popularity)* | **Hexbin Plot** or **Scatter Plot with Trendline**<br>*(X=Duration, Y=Popularity)* | **Rationale:** With 100k+ rows, a standard scatter plot will suffer from overplotting. A Hexbin plot groups dense points, clearly showing the "sweet spot" duration where most popular songs exist.<br><br>**Hypothesis Outcome:** We expect a dense cluster of high-popularity songs around the 3-4 minute mark, visualizing the industry standard. |
 
 ## Analysis techniques used
 
-TODO
+### **Statistical Validation**
+* **Non-Parametric Testing:** We prioritized non-parametric tests (**Mann-Whitney U** and **Kruskal-Wallis**) over standard parametric tests (T-Test/ANOVA).
+    * *Reasoning:* Our "Normality Checks" (Shapiro-Wilk) confirmed that audio features and popularity scores are highly skewed. Using parametric tests on this data would lead to incorrect P-values and false conclusions.
+
+### **Data Visualization Strategies**
+* **Distribution Analysis (Box Plots):** Used to visualize the spread and central tendency of popularity across genres, highlighting outliers and consistency.
+* **Density Estimation (Hexbins):** Employed for the Duration vs. Popularity analysis to handle the large dataset size (100,000+ rows). This technique reveals high-density clusters that would be invisible in a standard scatter plot.
+* **Binning:** Continuous variables (like Duration) were converted into categorical bins (e.g., "Radio Edit: 3-4 min") to allow for group-based statistical comparison.
 
 ## Ethical considerations
 
