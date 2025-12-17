@@ -249,11 +249,21 @@ The libraries used for data analysis were:
 
 ### Content 
 
-TODO
+- [Code institute](https://codeinstitute.net/) - The intial project structure and the LMS (Learning Managment System) from the course.
+- [Kaggle](https://www.kaggle.com/) - Providing the data set used.
 
 ### Media
 
-TODO
+- [Google AI - Gemini 3](https://deepmind.google/models/gemini/) - AI generated banner logo for this README file.
+- [Google Material Icons](https://fonts.google.com/icons) - Icons in the dashboard.
+- [Code Institute](https://codeinstitute.net/) - Code Institute logo.
+- [Python](https://www.python.org/) - Python logo image.
+- [Pandas](https://pandas.pydata.org/) - Pandas logo image.
+- [Matplotlib](https://matplotlib.org/) - Matplotlib logo image.
+- [Seaborn](https://seaborn.pydata.org/) - Seaborn logo image.
+- [Kaggle](https://www.kaggle.com/) - Kaggle logo image.
+- [Scikit-learn](https://scikit-learn.org/stable/) - Scikit-learn logo image.
+- [Streamlit](https://docs.streamlit.io/) - Steamlit logo image.
 
 ## Acknowledgements (optional)
 
