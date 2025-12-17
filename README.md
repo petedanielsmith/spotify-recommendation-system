@@ -178,7 +178,31 @@ The dataset used in this project can be downloaded from [Kaggle: Spotify Tracks 
 
 ## Business Requirements
 
-TODO
+The objective of this project is to design and evaluate a data-driven music recommendation system using Spotify track data. The system is developed for educational purposes, demonstrating the application of data engineering, exploratory analysis, unsupervised learning, and predictive modelling techniques.
+
+1. Data Ingestion and ETL
+  - Ingest a publicly available Spotify dataset containing track metadata and audio features.
+  - Clean, transform, and structure the data to ensure consistency, completeness, and suitability for analysis.
+  - Handle missing values, duplicates, and feature scaling as part of the ETL pipeline.
+  - Produce a processed dataset that can be reused across analysis and modelling stages.
+
+2. Exploratory Data Analysis (EDA)
+  - Perform exploratory analysis to understand the distribution and relationships of key audio features (e.g. energy, tempo, valence, popularity).
+  - Identify trends, correlations, and potential biases within the dataset.
+  - Visualise feature distributions and clustering tendencies to inform modelling decisions.
+
+3. Clustering and Segmentation
+  - Apply unsupervised learning techniques (e.g. K-Means) to group tracks based on audio feature similarity.
+  - Evaluate cluster quality and interpretability.
+  - Use clustering results to identify distinct musical styles or listening profiles.
+
+4. Predictive Recommendation System
+  - Develop a recommendation approach that suggests tracks based on similarity to a given song or cluster.
+  - Use audio features and clustering outputs to generate predictive recommendations.
+
+5. Evaluation and Documentation
+  - Assess model outputs qualitatively and quantitatively where appropriate.
+  - Document assumptions, limitations, and design decisions.
 
 ## Hypothesis and how to validate?
 
@@ -186,7 +210,17 @@ TODO
 
 ## Project Plan
 
-TODO
+The prjoject follows the following steps:
+
+1. `Extract` - Extract the data from Kaggle.
+2. `Load` - Load the CSV via Pandas.
+3. `Transform` - Clean and process the data using Pandas, adding new columns and checking for missing or duplicated values.
+4. `Visualise` - Creating charts with Matplotlib and Seaborn to visualise trends and distributions.
+5. `Analyse` - Interpret what the visualisations displayed.
+6. `Unupervised Learning` - Use K-Means to cluster the data in to similar groups.
+7. `Supervised Learning` - Use both Linear Regression and Random Forrest machine learning to create predictive models.
+8. `Interactive Dashboard` - Use Streamlit to create an interactive dasboard to display the data and run predictive recommendations.
+9. `Document` - Record findings and conclusions.
 
 ## The rationale to map the business requirements to the Data Visualisations
 
@@ -198,7 +232,11 @@ TODO
 
 ## Ethical considerations
 
-TODO
+This project uses a publicly available Spotify dataset containing track-level metadata and audio features such as popularity, genre, tempo, energy, and danceability. The dataset does not include any personally identifiable information (PII) or individual user listening histories. As a result, the project does not present risks related to user privacy, data protection, or GDPR compliance.
+
+Despite the absence of personal data, ethical considerations remain relevant. The dataset reflects platform-driven popularity and listening trends, which may introduce bias into the recommendation system. Popular artists and genres may be over-represented, while niche or emerging artists may be under-recommended. Recommendations based solely on audio features may also fail to capture cultural, contextual, or subjective aspects of musical preference.
+
+This system is developed for educational and coursework purposes only, with the goal of exploring recommendation techniques rather than influencing user behaviour or commercial outcomes. The limitations of the dataset and model are acknowledged, and the recommendations should be interpreted as illustrative rather than authoritative. Future extensions of the project could include bias evaluation, diversity-aware recommendation strategies, and improved transparency in recommendation logic.
 
 ## Dashboard Design
 
@@ -231,17 +269,35 @@ streamlit run dashboard_app/main.py
 
 ## Main Data Analysis Libraries
 
-TODO
+The libraries used for data analysis were:
+
+1. `Pandas` - For data loading, transforming and cleaning.
+2. `NumPy` - For data transforming.
+3. `Matplotlib` - For overall multi chart layouts.
+4. `Seaborn` - For a lot of the individual charts.
+5. `Scikit-learn` - For machine learning alogrithms.
+6. `Joblib` - For saving and loading models.
+7. `Streamlit` - For creating an interactive web dashboard.
 
 ## Credits 
 
 ### Content 
 
-TODO
+- [Code institute](https://codeinstitute.net/) - The intial project structure and the LMS (Learning Managment System) from the course.
+- [Kaggle](https://www.kaggle.com/) - Providing the data set used.
 
 ### Media
 
-TODO
+- [Google AI - Gemini 3](https://deepmind.google/models/gemini/) - AI generated banner logo for this README file.
+- [Google Material Icons](https://fonts.google.com/icons) - Icons in the dashboard.
+- [Code Institute](https://codeinstitute.net/) - Code Institute logo.
+- [Python](https://www.python.org/) - Python logo image.
+- [Pandas](https://pandas.pydata.org/) - Pandas logo image.
+- [Matplotlib](https://matplotlib.org/) - Matplotlib logo image.
+- [Seaborn](https://seaborn.pydata.org/) - Seaborn logo image.
+- [Kaggle](https://www.kaggle.com/) - Kaggle logo image.
+- [Scikit-learn](https://scikit-learn.org/stable/) - Scikit-learn logo image.
+- [Streamlit](https://docs.streamlit.io/) - Steamlit logo image.
 
 ## Acknowledgements (optional)
 
