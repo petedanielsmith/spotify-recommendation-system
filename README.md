@@ -235,7 +235,15 @@ streamlit run dashboard_app/main.py
 
 ## Main Data Analysis Libraries
 
-TODO
+The libraries used for data analysis were:
+
+1. `Pandas` - For data loading, transforming and cleaning.
+2. `NumPy` - For data transforming.
+3. `Matplotlib` - For overall multi chart layouts.
+4. `Seaborn` - For a lot of the individual charts.
+5. `Scikit-learn` - For machine learning alogrithms.
+6. `Joblib` - For saving and loading models.
+7. `Streamlit` - For creating an interactive web dashboard.
 
 ## Credits 
 
