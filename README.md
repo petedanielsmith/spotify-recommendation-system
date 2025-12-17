@@ -186,7 +186,17 @@ TODO
 
 ## Project Plan
 
-TODO
+The prjoject follows the following steps:
+
+1. `Extract` - Extract the data from Kaggle.
+2. `Load` - Load the CSV via Pandas.
+3. `Transform` - Clean and process the data using Pandas, adding new columns and checking for missing or duplicated values.
+4. `Visualise` - Creating charts with Matplotlib and Seaborn to visualise trends and distributions.
+5. `Analyse` - Interpret what the visualisations displayed.
+6. `Unupervised Learning` - Use K-Means to cluster the data in to similar groups.
+7. `Supervised Learning` - Use both Linear Regression and Random Forrest machine learning to create predictive models.
+8. `Interactive Dashboard` - Use Streamlit to create an interactive dasboard to display the data and run predictive recommendations.
+9. `Document` - Record findings and conclusions.
 
 ## The rationale to map the business requirements to the Data Visualisations
 
