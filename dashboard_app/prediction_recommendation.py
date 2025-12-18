@@ -22,9 +22,22 @@ KEY_MAPPING = {
     11: "B",
 }
 
+# Mapping cluster IDs to meaningful names (Top Genre per cluster)
+CLUSTER_NAMES = {
+    0: "Extreme/Metal",
+    1: "Rhythmic/Pagode",
+    2: "Electronic/House",
+    3: "Country/Folk",
+    4: "Techno/Minimal",
+    5: "Ambient/New-Age",
+    6: "Pop/J-Dance",
+    7: "Party/Dance",
+    8: "Latin",
+    9: "Acoustic/Piano",
+}
+
 CURRENT_DIR = Path(__file__).resolve().parents[1]
 # --- Define Absolute File Paths ---
-# Ensure these paths match your actual folder structure
 MODEL_PATH = CURRENT_DIR / 'models/best_spotify_model.pkl'
 CLUSTER_DATA = CURRENT_DIR / 'data/labelled/clusters_k10_labels.csv'
 
@@ -83,8 +96,7 @@ def main():
     input_data['danceability'] = st.sidebar.slider("Danceability", 0.0, 1.0, 0.5)
     input_data['energy'] = st.sidebar.slider("Energy", 0.0, 1.0, 0.5)
     
-    # UPDATED: Key selection with meaningful labels
-    # We use keys 0-11 for standard pitch classes.
+    # Key selection with meaningful labels
     input_data['key'] = st.sidebar.selectbox(
         "Musical Key", 
         options=range(12), 
@@ -108,22 +120,23 @@ def main():
         # 1. Predict Cluster
         predicted_cluster = model.predict(user_input_df)[0]
         
+        # Get meaningful label
+        predicted_label = CLUSTER_NAMES.get(predicted_cluster, f"Cluster {predicted_cluster}")
+        
         st.subheader(f"Results")
-        st.success(f"Based on your inputs, these songs belong to **Cluster {predicted_cluster}**")
+        st.success(f"Based on your inputs, these songs belong to: **{predicted_label}**")
 
         # 2. Filter data for that cluster
         cluster_songs = df[df['cluster'] == predicted_cluster].copy()
         
         # 3. Find most relevant songs (Nearest Neighbors by Euclidean Distance)
-        # Calculate distance between user input and all songs in the cluster
-        # We only use the numerical features for distance calculation
         distances = euclidean_distances(user_input_df[features], cluster_songs[features])
         cluster_songs['similarity_distance'] = distances[0]
         
         # Sort by distance (smaller distance = more relevant)
-        recommendations = cluster_songs.sort_values(by='similarity_distance').head(50) # Top 50 candidates
+        recommendations = cluster_songs.sort_values(by='similarity_distance').head(50)
 
-        # Store in session state to persist for filtering
+        # Store in session state
         st.session_state['recommendations'] = recommendations
         st.session_state['predicted_cluster'] = predicted_cluster
 
@@ -138,44 +151,35 @@ def main():
         artist_filter = st.text_input("Filter by Artist Name (Optional):", placeholder="e.g., Ed Sheeran")
         
         if artist_filter:
-            # Case-insensitive contains search
             final_display = recs[recs['artists'].str.contains(artist_filter, case=False, na=False)]
         else:
             final_display = recs
 
-        # --- Group duplicate songs & aggregate genres ---
+        # Group duplicate songs & aggregate genres
         grouped_display = (
             final_display
             .groupby(['artists', 'track_name', 'album_name', 'popularity'], as_index=False)
-            .agg({
-                'track_genre': lambda x: sorted(set(x))
-            })
+            .agg({'track_genre': lambda x: sorted(set(x))})
         )
-
-        # Convert genre list to readable string
-        grouped_display['track_genre'] = grouped_display['track_genre'].apply(
-            lambda genres: ", ".join(genres)
-        )
-
+        grouped_display['track_genre'] = grouped_display['track_genre'].apply(lambda genres: ", ".join(genres))
 
         # Display Logic
         if final_display.empty:
             st.warning("No songs found matching that artist in the top recommendations.")
         else:
-            # Show top 10 from the filtered list
-            st.write(f"Showing top results for **Cluster {st.session_state['predicted_cluster']}** sorted by relevance:")
+            # Retrieve label again for display
+            cluster_val = st.session_state['predicted_cluster']
+            cluster_label = CLUSTER_NAMES.get(cluster_val, f"Cluster {cluster_val}")
             
-            # # Display simpler table
-            # display_cols = ['artists', 'track_name', 'album_name', 'popularity', 'track_genre']
-            # st.dataframe(final_display[display_cols].reset_index(drop=True))
-
+            st.write(f"Showing top results for **{cluster_label}** sorted by relevance:")
+            
             for idx, row in grouped_display.iterrows():
                 with st.expander(f"🎵 {row['artists']} — {row['track_name']}"):
                     st.write(f"**Album:** {row['album_name']}")
                     st.write(f"**Popularity:** {row['popularity']}")
                     st.write(f"**Genres:** {row['track_genre']}")
 
-            # Optional: Visual comparison
+            # Feature Comparison
             st.write("### Feature Comparison")
             st.write("Compare your input (Red line) with the average of the recommended songs (Blue bars).")
             
