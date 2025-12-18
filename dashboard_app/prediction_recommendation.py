@@ -4,6 +4,7 @@ import numpy as np
 import joblib
 from sklearn.metrics.pairwise import euclidean_distances
 from pathlib import Path
+from PIL import Image
 
 # --- Constants & Configuration ---
 KEY_MAPPING = {
@@ -40,7 +41,13 @@ CURRENT_DIR = Path(__file__).resolve().parents[1]
 # --- Define Absolute File Paths ---
 MODEL_PATH = CURRENT_DIR / 'models/best_spotify_model.pkl'
 CLUSTER_DATA = CURRENT_DIR / 'data/labelled/clusters_k10_labels.csv'
+BANNER_PATH = CURRENT_DIR / 'images/banner_image.png'
 
+try:
+    banner = Image.open(BANNER_PATH)
+    st.image(banner, use_container_width=True)
+except FileNotFoundError:
+    st.warning("Banner image not found.")
 # Set page config
 st.set_page_config(page_title="Music Recommendation Engine", layout="wide")
 
