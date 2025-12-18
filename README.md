@@ -294,23 +294,23 @@ TODO
 The project is structured into four distinct phases, ensuring a logical flow from raw data to a user-facing application.
 
 ### Phase 1: Cleaning, EDA & Hypothesis Testing (Notebook 01)
-* **Data Cleaning** 
-* **Hypothesis Testing** 
-* **EDA**
+* Data Cleaning
+* Hypothesis Testing
+* EDA
 
 ### Phase 2: Clustering (Notebook 02)
-* **Feature Engineering** 
-* **Model Selection**
-* **Evaluation** 
+* Feature Engineering
+* Model Selection
+* Evaluation 
 
 ### Phase 3: Predictions for Song Recommendation (Notebook 03)
-* **Classification** 
-* **Tuning** 
-* **Recommendation Logic** 
+* Classification
+* Tuning 
+* Recommendation Logic 
 
 ### Phase 4: Dashboard & Documentation
-* **Streamlit App**
-* **Documentation** 
+* Streamlit App
+* README 
 
 ## Conclusions
 
