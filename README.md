@@ -246,6 +246,25 @@ The prjoject follows the following steps:
 * **Density Estimation (Hexbins):** Employed for the Duration vs. Popularity analysis to handle the large dataset size (100,000+ rows). This technique reveals high-density clusters that would be invisible in a standard scatter plot.
 * **Binning:** Continuous variables (like Duration) were converted into categorical bins (e.g., "Radio Edit: 3-4 min") to allow for group-based statistical comparison.
 
+## Machine Learning Techniques
+
+### Clustering
+TO DO
+### Classification
+
+The classification phase focuses on building a robust predictive model to assign new song data or user preferences to one of the 10 identified musical clusters.
+
+* **Objective**: Train and evaluate multiple machine learning algorithms to classify audio features into target clusters.
+* **Workflow**:
+    1.  **Data Preparation**: The dataset is split into training (80%) and testing (20%) sets, stratified by cluster to ensure class balance.
+    2.  **Model Selection**: Three distinct classifiers are trained and compared:
+        * **Random Forest Classifier** (`n_estimators=200`)
+        * **Gradient Boosting Classifier**
+        * **XGBoost Classifier** (optimized with `max_depth=6`, `learning_rate=0.1`)
+    3.  **Evaluation**: Models are evaluated based on **Accuracy**. The notebook automatically identifies the best-performing model among the three.
+    4.  **Deployment**: The champion model is serialized and saved as `best_spotify_model.pkl` for integration into the application.
+* **Features Used**: 11 numerical audio attributes, including `danceability`, `energy`, `key`, `loudness`, `mode`, `speechiness`, `acousticness`, `instrumentalness`, `liveness`, `valence`, and `tempo`.
+
 ## Ethical considerations
 
 This project uses a publicly available Spotify dataset containing track-level metadata and audio features such as popularity, genre, tempo, energy, and danceability. The dataset does not include any personally identifiable information (PII) or individual user listening histories. As a result, the project does not present risks related to user privacy, data protection, or GDPR compliance.
@@ -280,22 +299,7 @@ This page serves as the analytical foundation of the project, presenting our Hyp
 #### 2. Clustering
 *TODO:
 
-#### 3. Classification
-
-The classification phase focuses on building a robust predictive model to assign new song data or user preferences to one of the 10 identified musical clusters.
-
-* **Objective**: Train and evaluate multiple machine learning algorithms to classify audio features into target clusters.
-* **Workflow**:
-    1.  **Data Preparation**: The dataset is split into training (80%) and testing (20%) sets, stratified by cluster to ensure class balance.
-    2.  **Model Selection**: Three distinct classifiers are trained and compared:
-        * **Random Forest Classifier** (`n_estimators=200`)
-        * **Gradient Boosting Classifier**
-        * **XGBoost Classifier** (optimized with `max_depth=6`, `learning_rate=0.1`)
-    3.  **Evaluation**: Models are evaluated based on **Accuracy**. The notebook automatically identifies the best-performing model among the three.
-    4.  **Deployment**: The champion model is serialized and saved as `best_spotify_model.pkl` for integration into the application.
-* **Features Used**: 11 numerical audio attributes, including `danceability`, `energy`, `key`, `loudness`, `mode`, `speechiness`, `acousticness`, `instrumentalness`, `liveness`, `valence`, and `tempo`.
-
-#### 4. Dashboard (Prediction & Recommendation)
+#### 3. Prediction & Recommendation
 
 The project features an interactive web application built with **Streamlit**, serving as the front-end for the recommendation engine.
 
