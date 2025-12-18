@@ -5,8 +5,26 @@ import joblib
 from sklearn.metrics.pairwise import euclidean_distances
 from pathlib import Path
 
+# --- Constants & Configuration ---
+KEY_MAPPING = {
+    -1: "Unknown",
+    0: "C",
+    1: "C♯ / D♭",
+    2: "D",
+    3: "D♯ / E♭",
+    4: "E",
+    5: "F",
+    6: "F♯ / G♭",
+    7: "G",
+    8: "G♯ / A♭",
+    9: "A",
+    10: "A♯ / B♭",
+    11: "B",
+}
+
 CURRENT_DIR = Path(__file__).resolve().parents[1]
 # --- Define Absolute File Paths ---
+# Ensure these paths match your actual folder structure
 MODEL_PATH = CURRENT_DIR / 'models/best_spotify_model.pkl'
 CLUSTER_DATA = CURRENT_DIR / 'data/labelled/clusters_k10_labels.csv'
 
@@ -16,10 +34,14 @@ st.set_page_config(page_title="Music Recommendation Engine", layout="wide")
 @st.cache_data
 def load_data():
     """Loads the dataset with cluster labels."""
-    df = pd.read_csv(CLUSTER_DATA)
-    # Clean up index columns if they exist
-    df = df.drop(columns=['Unnamed: 0', 'Unnamed: 0.1'], errors='ignore')
-    return df
+    try:
+        df = pd.read_csv(CLUSTER_DATA)
+        # Clean up index columns if they exist
+        df = df.drop(columns=['Unnamed: 0', 'Unnamed: 0.1'], errors='ignore')
+        return df
+    except FileNotFoundError:
+        st.error(f"Data file not found at: {CLUSTER_DATA}")
+        return pd.DataFrame()
 
 @st.cache_resource
 def load_model():
@@ -28,7 +50,7 @@ def load_model():
         model = joblib.load(MODEL_PATH)
         return model
     except FileNotFoundError:
-        st.error("Model file 'spotify_cluster_model.pkl' not found. Please run the training notebook first.")
+        st.error(f"Model file not found at: {MODEL_PATH}. Please run the training notebook first.")
         return None
 
 def main():
@@ -42,7 +64,7 @@ def main():
     df = load_data()
     model = load_model()
 
-    if model is None:
+    if model is None or df.empty:
         return
 
     # --- Sidebar: User Inputs ---
@@ -60,7 +82,15 @@ def main():
     
     input_data['danceability'] = st.sidebar.slider("Danceability", 0.0, 1.0, 0.5)
     input_data['energy'] = st.sidebar.slider("Energy", 0.0, 1.0, 0.5)
-    input_data['key'] = st.sidebar.selectbox("Key (0-11)", range(12), 0)
+    
+    # UPDATED: Key selection with meaningful labels
+    # We use keys 0-11 for standard pitch classes.
+    input_data['key'] = st.sidebar.selectbox(
+        "Musical Key", 
+        options=range(12), 
+        format_func=lambda x: KEY_MAPPING.get(x, str(x))
+    )
+    
     input_data['loudness'] = st.sidebar.slider("Loudness (dB)", -60.0, 0.0, -10.0)
     input_data['mode'] = st.sidebar.selectbox("Mode (0: Minor, 1: Major)", [0, 1], 1)
     input_data['speechiness'] = st.sidebar.slider("Speechiness", 0.0, 1.0, 0.05)
