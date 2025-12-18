@@ -143,6 +143,21 @@ def main():
         else:
             final_display = recs
 
+        # --- Group duplicate songs & aggregate genres ---
+        grouped_display = (
+            final_display
+            .groupby(['artists', 'track_name', 'album_name', 'popularity'], as_index=False)
+            .agg({
+                'track_genre': lambda x: sorted(set(x))
+            })
+        )
+
+        # Convert genre list to readable string
+        grouped_display['track_genre'] = grouped_display['track_genre'].apply(
+            lambda genres: ", ".join(genres)
+        )
+
+
         # Display Logic
         if final_display.empty:
             st.warning("No songs found matching that artist in the top recommendations.")
@@ -150,9 +165,15 @@ def main():
             # Show top 10 from the filtered list
             st.write(f"Showing top results for **Cluster {st.session_state['predicted_cluster']}** sorted by relevance:")
             
-            # Display simpler table
-            display_cols = ['artists', 'track_name', 'album_name', 'popularity', 'track_genre']
-            st.dataframe(final_display[display_cols].reset_index(drop=True))
+            # # Display simpler table
+            # display_cols = ['artists', 'track_name', 'album_name', 'popularity', 'track_genre']
+            # st.dataframe(final_display[display_cols].reset_index(drop=True))
+
+            for idx, row in grouped_display.iterrows():
+                with st.expander(f"🎵 {row['artists']} — {row['track_name']}"):
+                    st.write(f"**Album:** {row['album_name']}")
+                    st.write(f"**Popularity:** {row['popularity']}")
+                    st.write(f"**Genres:** {row['track_genre']}")
 
             # Optional: Visual comparison
             st.write("### Feature Comparison")
