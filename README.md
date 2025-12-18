@@ -232,8 +232,8 @@ The prjoject follows the following steps:
 
 | Business Requirement | Data Visualisation(s) | Rationale & Hypothesis Outcome |
 | :--- | :--- | :--- |
-| **1. Identify trends in music preferences**<br>*(Genre Popularity)* | **Box Plot**<br>*(X=Genre, Y=Popularity)* | **Rationale:** Box plots show not just the *average* popularity, but the *variance* within a genre. This reveals if a genre is consistently popular (tight box, high median) or hit-or-miss (large spread).<br><br>**Hypothesis Outcome:** We expect to see "Pop-Film" and "K-Pop" with high medians, confirming global preference for these styles. |
-| **2. Visualise popular songs by time**<br>*(Duration vs. Popularity)* | **Hexbin Plot** or **Scatter Plot with Trendline**<br>*(X=Duration, Y=Popularity)* | **Rationale:** With 100k+ rows, a standard scatter plot will suffer from overplotting. A Hexbin plot groups dense points, clearly showing the "sweet spot" duration where most popular songs exist.<br><br>**Hypothesis Outcome:** We expect a dense cluster of high-popularity songs around the 3-4 minute mark, visualizing the industry standard. |
+| **1. Identify trends in music preferences**<br>*(Genre Popularity)* | **Box Plot**<br>*(X=Genre, Y=Popularity)* | **Rationale:** Box plots show not just the *average* popularity, but the *variance* within a genre. This reveals if a genre is consistently popular (tight box, high median) or hit-or-miss (large spread).<br><br>**Hypothesis Outcome:** The analysis reveals that "Pop-Film" and "K-Pop" with high medians, confirming global preference for these styles. |
+| **2. Visualise popular songs by time**<br>*(Duration vs. Popularity)* | **Hexbin Plot** or **Scatter Plot with Trendline**<br>*(X=Duration, Y=Popularity)* | **Rationale:** With 100k+ rows, a standard scatter plot will suffer from overplotting. A Hexbin plot groups dense points, clearly showing the "sweet spot" duration where most popular songs exist.<br><br>**Hypothesis Outcome:** The analysis reveals a significant concentration of high-popularity tracks within the 3-to-4-minute range, effectively visualizing the prevailing industry standard. |
 
 ## Analysis techniques used
 
@@ -256,7 +256,32 @@ This system is developed for educational and coursework purposes only, with the 
 
 ## Dashboard Design
 
-TODO
+The dashboard was designed with accessibility for non-technical users as a priority. Visualizations were carefully selected for clarity to ensure insights are immediately understandable, while **Plotly** was utilized to deliver a visually appealing and interactive user experience. Furthermore, textual explanations and strategic recommendations were embedded directly into the interface to ensure self-service interpretation.
+
+### Dashboard Pages:
+
+#### 1. EDA - Exploratory Data Analysis
+This page serves as the analytical foundation of the project, presenting our Hypothesis Testing and Data Quality checks. To accommodate different stakeholders, the analysis is split into two distinct views:
+
+* **Tab 1: Executive Insights (Business)**
+    * **Focus:** High-level trends and actionable strategy.
+    * **Key Visuals:**
+        * **The "Mainstream" Gap:** A box plot comparing the Top 10 vs. Bottom 10 genres, highlighting the massive popularity advantage of mainstream music.
+        * **The "Radio Edit" Effect:** A dual-view chart (Bar & Density) visualizing the "sweet spot" for song duration (3–4 minutes).
+    * **Outcome:** Provides clear "Business Recommendations" for the recommendation engine, such as implementing a popularity bias for new users and filtering out non-musical content.
+
+* **Tab 2: Data Science Lab (Technical)**
+    * **Focus:** Statistical validity and feature engineering.
+    * **Key Visuals:**
+        * **Normality Checks:** A dynamic table showing Shapiro-Wilk test results to justify non-parametric testing.
+        * **Correlation Matrix:** A heatmap identifying multicollinearity (e.g., Energy vs. Loudness).
+        * **Formal Hypothesis Testing:** Raw outputs of Mann-Whitney U and Kruskal-Wallis tests (Statistic & P-Value) to mathematically prove that observed trends are not random noise.
+
+#### 2. Clustering
+*TODO:
+
+#### 3. Prediction - Recommendation
+*TODO:
 
 
 ## Unfixed Bugs
@@ -266,7 +291,26 @@ TODO
 
 ## Development Roadmap
 
-TODO
+The project is structured into four distinct phases, ensuring a logical flow from raw data to a user-facing application.
+
+### Phase 1: Cleaning, EDA & Hypothesis Testing (Notebook 01)
+* **Data Cleaning** 
+* **Hypothesis Testing** 
+* **EDA**
+
+### Phase 2: Clustering (Notebook 02)
+* **Feature Engineering** 
+* **Model Selection**
+* **Evaluation** 
+
+### Phase 3: Predictions for Song Recommendation (Notebook 03)
+* **Classification** 
+* **Tuning** 
+* **Recommendation Logic** 
+
+### Phase 4: Dashboard & Documentation
+* **Streamlit App**
+* **Documentation** 
 
 ## Conclusions
 
