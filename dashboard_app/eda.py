@@ -3,7 +3,6 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.express as px
-import numpy as np
 from scipy import stats
 
 # --- PAGE CONFIGURATION ---
@@ -13,7 +12,20 @@ st.set_page_config(page_title="Spotify EDA & Trends", layout="wide")
 @st.cache_data
 def load_data():
     # Data file is in the /data/processed/ directory
-    df = pd.read_csv('./data/processed/cleaned_spotify_dataset.csv')
+    #df = pd.read_csv('./data/processed/cleaned_spotify_dataset.csv')
+    try:
+        df = pd.read_csv('./data/processed/cleaned_spotify_dataset.csv')
+    except (FileNotFoundError, pd.errors.EmptyDataError, pd.errors.ParserError) as e:
+        st.error(
+            "Unable to load the Spotify dataset. "
+            "Please ensure './data/processed/cleaned_spotify_dataset.csv' exists and is a valid CSV file."
+        )
+        st.error(f"Details: {e}")
+        st.stop()
+    except Exception as e:
+        st.error("An unexpected error occurred while loading the Spotify dataset.")
+        st.error(f"Details: {e}")
+        st.stop()
     # Pre-calculate minutes for the whole dashboard
     df['duration_min'] = df['duration_ms'] / 60000
     return df
@@ -28,7 +40,7 @@ Audio features, genre popularity, and the impact of song duration are analyzed t
 """)
 
 # --- TABS LAYOUT ---
-tab1, tab2 = st.tabs(["📊 Executive Insights", "🧪 Data Abalytics Lab"])
+tab1, tab2 = st.tabs(["📊 Executive Insights", "🧪 Data Analytics Lab"])
 
 # ==============================================================================
 # TAB 1: EXECUTIVE INSIGHTS (BUSINESS)
@@ -62,7 +74,7 @@ with tab1:
 
     # --- SECTION 2: DURATION TRENDS (TWO COLUMNS) ---
     st.subheader("2. The 'Radio Edit' Effect")
-    st.info("**Insight:** Song length matters. Tracks between **3-4 minutes** are statistically most likely to be popular (The 'Sweet Spot'). This justify the prevalence of 'Radio Edits' in the music industry.")
+    st.info("**Insight:** Song length matters. Tracks between **3-4 minutes** are statistically most likely to be popular (The 'Sweet Spot'). This justifies the prevalence of 'Radio Edits' in the music industry.")
 
     col_radio1, col_radio2 = st.columns(2)
 
@@ -96,11 +108,11 @@ with tab1:
     st.markdown("""
     * **Cold Start Strategy:** Likely need a **"Popularity Bias"** weight for new users, favoring the 'Mainstream' cluster (Pop-Film, K-Pop) until we learn their specific tastes.
     * **Content Filtering Rules:** Implement a soft filter for tracks **> 6 minutes** for general listeners. These should only be recommended if the user specifically interacts with 'Classical', 'Techno', or 'Ambient' genres.
-    * **New Feature:** Danceability and Energy are key drivers for the general user base. However, 'Acousticness' is the defining feature for niche communities use this to quickly segment "Chill" users from "Party" users.
+    * **New Feature:** Danceability and Energy are key drivers for the general user base. However, 'Acousticness' is the defining feature for niche communities. Use this to quickly segment "Chill" users from "Party" users.
     """)
 
 # ==============================================================================
-# TAB 2: DATA ABALYTICS LAB (TECHNICAL)
+# TAB 2: DATA ANALYTICS LAB (TECHNICAL)
 # ==============================================================================
 with tab2:
     st.header("Technical EDA & Statistical Validation")
@@ -146,6 +158,7 @@ with tab2:
     fig_corr, ax = plt.subplots(figsize=(10, 5))
     sns.heatmap(corr_matrix, annot=True, fmt=".2f", cmap='coolwarm', vmin=-1, vmax=1, ax=ax)
     st.pyplot(fig_corr)
+    plt.close(fig_corr)
     
     st.markdown("""
     **Key Technical Findings:**
