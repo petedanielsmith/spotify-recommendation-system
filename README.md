@@ -144,7 +144,7 @@ If you setup a virtual enviroment then make sure you pick the venv one.
 ## Team Members
 - Cosmin Manolescu - [https://www.linkedin.com/in/cosmin-manolescu95/](https://www.linkedin.com/in/cosmin-manolescu95/)
 - Duminda Gamage - [https://www.linkedin.com/in/dumindap-gamage/](https://www.linkedin.com/in/dumindap-gamage/)
-- Kumudu Saranath Liyanage - 
+- Kumudu Saranath Liyanage - [https://www.linkedin.com/in/kumudu-s-liyanage/](https://www.linkedin.com/in/kumudu-s-liyanage/)
 - Pete Smith - [https://www.linkedin.com/in/petedanielsmith/](https://www.linkedin.com/in/petedanielsmith/)
 
 
