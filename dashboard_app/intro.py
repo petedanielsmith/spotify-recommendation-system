@@ -4,13 +4,19 @@ st.set_page_config(
     layout="wide",
 )
 
-st.image("https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Full_Logo_RGB_Green.png", width=200)
-st.title("Welcome to the Spotify Music Recommendation Dashboard")
+st.html("""
+<div style="background-color:#1DB954;padding:10px;border-radius:10px">
+    <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Full_Logo_RGB_White.png" alt="Spotify Logo" style="height:60px;display:block;margin-left:auto;margin-right:auto;">
+    <h1 style="color:white;text-align:center;">Spotify Music Recommendation Dashboard</h1>
+</div>        
+        """)
 
 st.markdown("""
 This dashboard provides insights into Spotify's music data, including exploratory data analysis, clustering of songs based on audio features, 
 and a prediction & recommendation engine that suggests songs based on user-defined audio characteristics.
 """)
+
+st.divider()
 
 st.markdown("""
 ## Created by:
