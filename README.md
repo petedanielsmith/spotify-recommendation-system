@@ -216,7 +216,7 @@ The objective of this project is to design and evaluate a data-driven music reco
 
 ## Project Plan
 
-The prjoject follows the following steps:
+The project follows the following steps:
 
 1. `Extract` - Extract the data from Kaggle.
 2. `Load` - Load the CSV via Pandas.
@@ -224,9 +224,10 @@ The prjoject follows the following steps:
 4. `Visualise` - Creating charts with Matplotlib and Seaborn to visualise trends and distributions.
 5. `Analyse` - Interpret what the visualisations displayed.
 6. `Unupervised Learning` - Use K-Means to cluster the data in to similar groups.
-7. `Supervised Learning` - Use both Linear Regression and Random Forrest machine learning to create predictive models.
-8. `Interactive Dashboard` - Use Streamlit to create an interactive dasboard to display the data and run predictive recommendations.
-9. `Document` - Record findings and conclusions.
+7. `Cluster insight extraction` - Understand clusters and create user-understandable profiles. 
+8. `Supervised Learning` - Use both Linear Regression and Random Forrest machine learning to create predictive models.
+9. `Interactive Dashboard` - Use Streamlit to create an interactive dasboard to display the data and run predictive recommendations.
+10. `Document` - Record findings and conclusions.
 
 ## The rationale to map the business requirements to the Data Visualisations
 
@@ -249,7 +250,20 @@ The prjoject follows the following steps:
 ## Machine Learning Techniques
 
 ### Clustering
-TO DO
+
+The clustering phase focuses on creating stable labels that the downstream classifier can be trained on, as well as human meaningful ones that can be explained.
+
+* **Why K-Means:**
+- Very good with continuous audio features (our dataset is almost all continuous)
+- It finds centroids, which can then be easily mapped to user preferences
+- Produced stable, interpretable and easily learnable cluster boundaries
+
+* **Workflow**:
+    1.  **Data Preparation**: Unusable columns were dropped, categorical columns were numerically encoded, then all columns were normalised using `StandardScaler`, finally the whole dataset was optimised using PCA(`n_components=0.85`).
+    2.  **Training the model**: Used `k-means++` as the centroid selection strategy, with `n_init=10` to get multiple seeds, finally we tried `K=range(2,31)` to cover a wide range. 
+    3.  **Selecting optimal K**: Used Inertia (i.e. Elbow Method) and the Silhouette score to choose the optimal K.
+    4.  **Obtain labels**: Labels were then obtained from the model with the best K, and were attached to the dataset.
+
 ### Classification
 
 The classification phase focuses on building a robust predictive model to assign new song data or user preferences to one of the 10 identified musical clusters.
@@ -297,7 +311,16 @@ This page serves as the analytical foundation of the project, presenting our Hyp
         * **Formal Hypothesis Testing:** Raw outputs of Mann-Whitney U and Kruskal-Wallis tests (Statistic & P-Value) to mathematically prove that observed trends are not random noise.
 
 #### 2. Clustering
-*TODO:
+On this page the users can observe all clusters, and learn about them. Furthermore, should they choose to, they can also learn more about the how these were obtained and some of the caveats associated with the process and its results.
+
+* **Tab 1: Cluster Profiles (Business)**
+    * **Focus:** Users understanding what each profiles.
+    * **Key Visuals:**
+        * **Cluster Radar Graph:** radar / spider plot showing the strenghts and weaknesses of each cluster.
+    * **Outcome:** Cluster profiles are explained to users, improving the usability of the system.
+
+* **Tab 2: Building the Clusters (Technical)**
+    * **Focus:** Technical explanation of the creation of clusters, plus caveats.
 
 #### 3. Prediction & Recommendation
 
@@ -321,7 +344,7 @@ The project features an interactive web application built with **Streamlit**, se
 
 ## Unfixed Bugs
 
-TODO
+All known issues, to the team's knowledge, were fixed.
 
 
 ## Development Roadmap
@@ -347,9 +370,17 @@ The project is structured into four distinct phases, ensuring a logical flow fro
 * Streamlit App
 * README 
 
+### Future directions
+- Utilise the Spotify APIs to enable us to pull track/artist imagery and web links to the songs.
+- Add a 'like songs' page to the dashboard where users can search for tracks by artist/genre/track/albumn and then have a button next to the track to find like songs, which return other songs in the ame cluster
+
 ## Conclusions
 
-TODO
+1. <ins>*The Radio Edit effect*</ins>: Data validates the "Radio Edit" effect, showing that songs between 3–4 minutes generally maximize commercial success compared to very short or long tracks.
+2. <ins>*Genre is an important feature*</ins>: Unsurprisingly, statistical testing confirms a considerable, non-random popularity gap where "Mainstream" genres (Pop, K-Pop) consistently outperform "Niche" genres.
+3. <ins>*Popularity is not useful for clustering*</ins>: After the clustering, a summary table of the clusters showed an almost identical Popularity score of ~ 35% for all, suggesting that it played no role.
+4. <ins>*Some clusters overlap*</ins>: 4 clusters were found to have only subtle differences, this reflects the continuous nature of musical tastes. Can also denote a technical quirk of K-means: it creates the specified number of clusters, becoming increasingly 'pernickety' as the actual differences between clusters decrease. 
+5. <ins>*Classification*</ins>: The project delivers a powerful classifier of clusters, able to achieve a **94.54%** accuracy on the test data.
 
 ## Deployment
 
@@ -373,6 +404,7 @@ The libraries used for data analysis were:
 5. `Scikit-learn` - For machine learning alogrithms.
 6. `Joblib` - For saving and loading models.
 7. `Streamlit` - For creating an interactive web dashboard.
+8. `XGBoost` - For training the XGBoost model
 
 ## Credits 
 
@@ -393,7 +425,3 @@ The libraries used for data analysis were:
 - [Kaggle](https://www.kaggle.com/) - Kaggle logo image.
 - [Scikit-learn](https://scikit-learn.org/stable/) - Scikit-learn logo image.
 - [Streamlit](https://docs.streamlit.io/) - Steamlit logo image.
-
-## Acknowledgements (optional)
-
-TODO
