@@ -234,7 +234,7 @@ On this page, explore the distinct music profiles identified through clustering 
 tab1, tab2 = st.tabs(["🧭 Cluster Profiles", "🛠️ Building the Clusters"])
 
 # ==============================================================================
-# TAB 1: EXECUTIVE INSIGHTS (BUSINESS)
+# TAB 1: CLUSTER PROFILING
 # ==============================================================================
 with tab1:
     st.info(
@@ -288,3 +288,43 @@ with tab1:
 
     > *{profile['user_facing']}*
     """)
+
+    # ==============================================================================
+# TAB 2: OBTAINING THE CLUSTERS
+# ==============================================================================
+with tab2:
+    st.info(
+        "This section explains how the music profiles were created, "
+        "including the modeling choices and validation steps used to ensure meaningful clusters."
+    )
+    with st.expander("🛠️ How were the clusters built?"):
+        st.markdown("""
+**🎧 1. Feature selection**  
+Only audio characteristics (e.g. energy, danceability, acousticness) were used.  
+Popularity and genre labels were excluded from clustering.
+
+**📐 2. Preprocessing**  
+All features were standardized to ensure equal contribution.  
+Dimensionality was reduced using PCA to retain 85% of variance.
+
+**🧩 3. Clustering algorithm**  
+K-Means clustering was applied with 10 clusters, chosen as a balance between expressiveness and stability.
+
+**🔍 4. Model validation**  
+The number of clusters was informed using elbow and silhouette analysis.  
+Final cluster quality was assessed visually and interpretively.
+
+**🏷️ 5. Interpretation**  
+Clusters were analyzed using aggregated audio profiles and genre distributions,  
+and translated into human-readable music listening profiles.
+""")
+    with st.expander("⚠️ Limitations & considerations"):
+        st.markdown("""
+1. **Overlapping cluster profiles**  
+Some clusters (notably clusters **2, 3, 7, and 8**) exhibit very similar audio characteristics. This reflects the continuous nature of musical taste rather than a modeling error.
+In dense regions of the audio feature space (e.g. energetic, danceable music), K-Means may split songs into multiple clusters with subtle differences. These clusters should therefore be interpreted as **closely related listening styles** rather than strictly distinct categories.
+
+2. **Interpretation focus**     
+Clusters are designed to capture similarities in sound and mood, not to reproduce genre labels. As a result, genre distributions within clusters are intentionally diverse and overlapping.
+Overall, clusters should be understood as **flexible listening profiles**, suitable for recommendation and exploration rather than rigid classification.
+""")
