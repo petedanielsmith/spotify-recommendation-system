@@ -280,8 +280,39 @@ This page serves as the analytical foundation of the project, presenting our Hyp
 #### 2. Clustering
 *TODO:
 
-#### 3. Prediction - Recommendation
-*TODO:
+#### 3. Classification
+
+The classification phase focuses on building a robust predictive model to assign new song data or user preferences to one of the 10 identified musical clusters.
+
+* **Objective**: Train and evaluate multiple machine learning algorithms to classify audio features into target clusters.
+* **Workflow**:
+    1.  **Data Preparation**: The dataset is split into training (80%) and testing (20%) sets, stratified by cluster to ensure class balance.
+    2.  **Model Selection**: Three distinct classifiers are trained and compared:
+        * **Random Forest Classifier** (`n_estimators=200`)
+        * **Gradient Boosting Classifier**
+        * **XGBoost Classifier** (optimized with `max_depth=6`, `learning_rate=0.1`)
+    3.  **Evaluation**: Models are evaluated based on **Accuracy**. The notebook automatically identifies the best-performing model among the three.
+    4.  **Deployment**: The champion model is serialized and saved as `best_spotify_model.pkl` for integration into the application.
+* **Features Used**: 11 numerical audio attributes, including `danceability`, `energy`, `key`, `loudness`, `mode`, `speechiness`, `acousticness`, `instrumentalness`, `liveness`, `valence`, and `tempo`.
+
+#### 4. Dashboard (Prediction & Recommendation)
+
+The project features an interactive web application built with **Streamlit**, serving as the front-end for the recommendation engine.
+
+* **User Interface**:
+    * **Feature Tuning**: Users can define their ideal "sound" using sliders for 11 audio features.
+    * **Musical Key Mapping**: A user-friendly dropdown allows selection of musical keys (e.g., C, F#, B) which are mapped internally to their integer representations.
+* **Prediction Engine**:
+    * Upon submission, the app loads the pre-trained `best_spotify_model.pkl`.
+    * It predicts the specific **Cluster** the user's input belongs to and maps it to a descriptive genre label (e.g., *Extreme/Metal*, *Electronic/House*, *Acoustic/Piano*) using a predefined `CLUSTER_NAMES` dictionary.
+* **Recommendation System**:
+    1.  **Filtering**: The dataset is filtered to include only songs from the predicted cluster.
+    2.  **Similarity Search**: The app calculates the **Euclidean Distance** between the user's input vector and every song in that cluster.
+    3.  **Ranking**: The top 50 songs with the lowest distance (highest similarity) are retrieved.
+* **Interactive Results**:
+    * **Artist Filter**: Users can search within the recommendations for specific artists.
+    * **Grouped Display**: Duplicate track entries are aggregated, displaying unique songs with their associated album and genres.
+    * **Visual Validation**: A bar chart acts as a feedback loop, visualizing the difference between the **User's Input** (Red) and the **Average Profile of Recommended Songs** (Blue).
 
 
 ## Unfixed Bugs
