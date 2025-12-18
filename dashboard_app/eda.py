@@ -198,5 +198,5 @@ with tab2:
     st.success("""
     **Conclusion:** 
     1. There is a statistically significant popularity gap. So, the genre is a considerable predictor of popularity.
-    2. Duration has a statistically significant non-linear "sweet spot."
+    2. Duration has a statistically significant non-linear "sweet spot".
     """)
