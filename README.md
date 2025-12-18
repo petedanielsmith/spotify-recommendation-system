@@ -144,7 +144,7 @@ If you setup a virtual enviroment then make sure you pick the venv one.
 ## Team Members
 - Cosmin Manolescu - [https://www.linkedin.com/in/cosmin-manolescu95/](https://www.linkedin.com/in/cosmin-manolescu95/)
 - Duminda Gamage - [https://www.linkedin.com/in/dumindap-gamage/](https://www.linkedin.com/in/dumindap-gamage/)
-- Kumudu Saranath Liyanage - 
+- Kumudu Saranath Liyanage - [https://www.linkedin.com/in/kumudu-s-liyanage/](https://www.linkedin.com/in/kumudu-s-liyanage/)
 - Pete Smith - [https://www.linkedin.com/in/petedanielsmith/](https://www.linkedin.com/in/petedanielsmith/)
 
 
@@ -232,8 +232,8 @@ The prjoject follows the following steps:
 
 | Business Requirement | Data Visualisation(s) | Rationale & Hypothesis Outcome |
 | :--- | :--- | :--- |
-| **1. Identify trends in music preferences**<br>*(Genre Popularity)* | **Box Plot**<br>*(X=Genre, Y=Popularity)* | **Rationale:** Box plots show not just the *average* popularity, but the *variance* within a genre. This reveals if a genre is consistently popular (tight box, high median) or hit-or-miss (large spread).<br><br>**Hypothesis Outcome:** We expect to see "Pop-Film" and "K-Pop" with high medians, confirming global preference for these styles. |
-| **2. Visualise popular songs by time**<br>*(Duration vs. Popularity)* | **Hexbin Plot** or **Scatter Plot with Trendline**<br>*(X=Duration, Y=Popularity)* | **Rationale:** With 100k+ rows, a standard scatter plot will suffer from overplotting. A Hexbin plot groups dense points, clearly showing the "sweet spot" duration where most popular songs exist.<br><br>**Hypothesis Outcome:** We expect a dense cluster of high-popularity songs around the 3-4 minute mark, visualizing the industry standard. |
+| **1. Identify trends in music preferences**<br>*(Genre Popularity)* | **Box Plot**<br>*(X=Genre, Y=Popularity)* | **Rationale:** Box plots show not just the *average* popularity, but the *variance* within a genre. This reveals if a genre is consistently popular (tight box, high median) or hit-or-miss (large spread).<br><br>**Hypothesis Outcome:** The analysis reveals that "Pop-Film" and "K-Pop" with high medians, confirming global preference for these styles. |
+| **2. Visualise popular songs by time**<br>*(Duration vs. Popularity)* | **Hexbin Plot** or **Scatter Plot with Trendline**<br>*(X=Duration, Y=Popularity)* | **Rationale:** With 100k+ rows, a standard scatter plot will suffer from overplotting. A Hexbin plot groups dense points, clearly showing the "sweet spot" duration where most popular songs exist.<br><br>**Hypothesis Outcome:** The analysis reveals a significant concentration of high-popularity tracks within the 3-to-4-minute range, effectively visualizing the prevailing industry standard. |
 
 ## Analysis techniques used
 
@@ -256,7 +256,63 @@ This system is developed for educational and coursework purposes only, with the 
 
 ## Dashboard Design
 
-TODO
+The dashboard was designed with accessibility for non-technical users as a priority. Visualizations were carefully selected for clarity to ensure insights are immediately understandable, while **Plotly** was utilized to deliver a visually appealing and interactive user experience. Furthermore, textual explanations and strategic recommendations were embedded directly into the interface to ensure self-service interpretation.
+
+### Dashboard Pages:
+
+#### 1. EDA - Exploratory Data Analysis
+This page serves as the analytical foundation of the project, presenting our Hypothesis Testing and Data Quality checks. To accommodate different stakeholders, the analysis is split into two distinct views:
+
+* **Tab 1: Executive Insights (Business)**
+    * **Focus:** High-level trends and actionable strategy.
+    * **Key Visuals:**
+        * **The "Mainstream" Gap:** A box plot comparing the Top 10 vs. Bottom 10 genres, highlighting the massive popularity advantage of mainstream music.
+        * **The "Radio Edit" Effect:** A dual-view chart (Bar & Density) visualizing the "sweet spot" for song duration (3–4 minutes).
+    * **Outcome:** Provides clear "Business Recommendations" for the recommendation engine, such as implementing a popularity bias for new users and filtering out non-musical content.
+
+* **Tab 2: Data Science Lab (Technical)**
+    * **Focus:** Statistical validity and feature engineering.
+    * **Key Visuals:**
+        * **Normality Checks:** A dynamic table showing Shapiro-Wilk test results to justify non-parametric testing.
+        * **Correlation Matrix:** A heatmap identifying multicollinearity (e.g., Energy vs. Loudness).
+        * **Formal Hypothesis Testing:** Raw outputs of Mann-Whitney U and Kruskal-Wallis tests (Statistic & P-Value) to mathematically prove that observed trends are not random noise.
+
+#### 2. Clustering
+*TODO:
+
+#### 3. Classification
+
+The classification phase focuses on building a robust predictive model to assign new song data or user preferences to one of the 10 identified musical clusters.
+
+* **Objective**: Train and evaluate multiple machine learning algorithms to classify audio features into target clusters.
+* **Workflow**:
+    1.  **Data Preparation**: The dataset is split into training (80%) and testing (20%) sets, stratified by cluster to ensure class balance.
+    2.  **Model Selection**: Three distinct classifiers are trained and compared:
+        * **Random Forest Classifier** (`n_estimators=200`)
+        * **Gradient Boosting Classifier**
+        * **XGBoost Classifier** (optimized with `max_depth=6`, `learning_rate=0.1`)
+    3.  **Evaluation**: Models are evaluated based on **Accuracy**. The notebook automatically identifies the best-performing model among the three.
+    4.  **Deployment**: The champion model is serialized and saved as `best_spotify_model.pkl` for integration into the application.
+* **Features Used**: 11 numerical audio attributes, including `danceability`, `energy`, `key`, `loudness`, `mode`, `speechiness`, `acousticness`, `instrumentalness`, `liveness`, `valence`, and `tempo`.
+
+#### 4. Dashboard (Prediction & Recommendation)
+
+The project features an interactive web application built with **Streamlit**, serving as the front-end for the recommendation engine.
+
+* **User Interface**:
+    * **Feature Tuning**: Users can define their ideal "sound" using sliders for 11 audio features.
+    * **Musical Key Mapping**: A user-friendly dropdown allows selection of musical keys (e.g., C, F#, B) which are mapped internally to their integer representations.
+* **Prediction Engine**:
+    * Upon submission, the app loads the pre-trained `best_spotify_model.pkl`.
+    * It predicts the specific **Cluster** the user's input belongs to and maps it to a descriptive genre label (e.g., *Extreme/Metal*, *Electronic/House*, *Acoustic/Piano*) using a predefined `CLUSTER_NAMES` dictionary.
+* **Recommendation System**:
+    1.  **Filtering**: The dataset is filtered to include only songs from the predicted cluster.
+    2.  **Similarity Search**: The app calculates the **Euclidean Distance** between the user's input vector and every song in that cluster.
+    3.  **Ranking**: The top 50 songs with the lowest distance (highest similarity) are retrieved.
+* **Interactive Results**:
+    * **Artist Filter**: Users can search within the recommendations for specific artists.
+    * **Grouped Display**: Duplicate track entries are aggregated, displaying unique songs with their associated album and genres.
+    * **Visual Validation**: A bar chart acts as a feedback loop, visualizing the difference between the **User's Input** (Red) and the **Average Profile of Recommended Songs** (Blue).
 
 
 ## Unfixed Bugs
@@ -266,7 +322,26 @@ TODO
 
 ## Development Roadmap
 
-TODO
+The project is structured into four distinct phases, ensuring a logical flow from raw data to a user-facing application.
+
+### Phase 1: Cleaning, EDA & Hypothesis Testing (Notebook 01)
+* Data Cleaning
+* Hypothesis Testing
+* EDA
+
+### Phase 2: Clustering (Notebook 02)
+* Feature Engineering
+* Model Selection
+* Evaluation 
+
+### Phase 3: Predictions for Song Recommendation (Notebook 03)
+* Classification
+* Tuning 
+* Recommendation Logic 
+
+### Phase 4: Dashboard & Documentation
+* Streamlit App
+* README 
 
 ## Conclusions
 
